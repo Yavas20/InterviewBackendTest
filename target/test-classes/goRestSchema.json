@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "default": {},
+  "title": "Root Schema",
+  "required": [
+    "meta",
+    "data"
+  ],
+  "properties": {
+    "meta": {
+      "type": "null",
+      "default": null,
+      "title": "The meta Schema",
+      "examples": [
+        null
+      ]
+    },
+    "data": {
+      "type": "object",
+      "default": {},
+      "title": "The data Schema",
+      "required": [
+        "id",
+        "name",
+        "email",
+        "gender",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "default": 0,
+          "title": "The id Schema",
+          "examples": [
+            3192
+          ]
+        },
+        "name": {
+          "type": "string",
+          "default": "",
+          "title": "The name Schema",
+          "examples": [
+            "Amaranaath Kaur"
+          ]
+        },
+        "email": {
+          "type": "string",
+          "default": "",
+          "title": "The email Schema",
+          "examples": [
+            "amaranaath_kaur@schumm.org"
+          ]
+        },
+        "gender": {
+          "type": "string",
+          "default": "",
+          "title": "The gender Schema",
+          "examples": [
+            "male"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "default": "",
+          "title": "The status Schema",
+          "examples": [
+            "active"
+          ]
+        }
+      },
+      "examples": [{
+        "id": 3192,
+        "name": "Amaranaath Kaur",
+        "email": "amaranaath_kaur@schumm.org",
+        "gender": "male",
+        "status": "active"
+      }]
+    }
+  },
+  "examples": [{
+    "meta": null,
+    "data": {
+      "id": 3192,
+      "name": "Amaranaath Kaur",
+      "email": "amaranaath_kaur@schumm.org",
+      "gender": "male",
+      "status": "active"
+    }
+  }]
+}
