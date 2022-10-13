@@ -56,7 +56,6 @@ public class test {
 
     }
 
-
     @DisplayName("Get created user info")
     @Test()
     @Order(2)
