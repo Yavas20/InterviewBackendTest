@@ -1,9 +1,12 @@
-
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.path.json.JsonPath;
+
 import models.CreateUserModel;
 import org.junit.jupiter.api.*;
 import services.GoRestService;
+
+import java.util.List;
+import java.util.Map;
 
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -12,16 +15,15 @@ import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class CreateUserTests {
+public class test {
 
-
-    final CreateUserModel createUserModel = new CreateUserModel("Gino Paloma", "Male", "qatest@test.com", "Active");
+    final CreateUserModel createUserModel = new CreateUserModel("Gino Paloma", "male", "qwswswdwtadrdrdbsswafasaaaaaqsaqawwaawqaaaaaaaaaaaaaaaaaaa@test.com", "active");
 
     int userId;
 
-    final CreateUserModel updateUserWithPut = new CreateUserModel("Gino Paloma", "Male", "qatest2@test.com", "Inactive");
+    final CreateUserModel updateUserWithPut = new CreateUserModel("Gino Paloma", "male", "qwadatawsaswwwaqqwaaaqaaaaaaaaaaaaaaaaaaaa2@test.com", "inactive");
 
-    final CreateUserModel updateUserWithPatch = new CreateUserModel( "qatest3@test.com", "Active");
+    final CreateUserModel updateUserWithPatch = new CreateUserModel( "qaaawaswqsawaqatadaaawwaqwaaaaaaaaaaaaa3@test.com", "active");
 
 
     @DisplayName("Create a new user")
@@ -29,9 +31,6 @@ public class CreateUserTests {
     @Order(1)
     public void Users_CreateUsers_Success(){
 
-        try{
-
-            assert(false);
 
             GoRestService.createUser(createUserModel)
                     .then()
@@ -43,15 +42,17 @@ public class CreateUserTests {
                     .body("data.email", equalTo(createUserModel.getEmail()))
                     .body("data.status", equalTo(createUserModel.getStatus()))
                     .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("goRestSchema.json"))
-                    .time(both(greaterThan(100L)).and(lessThanOrEqualTo(1000L)));
+                    .time(both(greaterThan(100L)).and(lessThanOrEqualTo(9500L))).log().body();
 
 
-            JsonPath jsonPath =  GoRestService.createUser(createUserModel).jsonPath();
-            userId = jsonPath.getInt("data.id");
+        JsonPath jsonPath = GoRestService.createUser(createUserModel).jsonPath();
 
-        }catch(AssertionError e) {
+        List<Map<String, Object>> datas = jsonPath.getList("data");
 
-        }
+        System.out.println(datas);
+       //System.out.println( GoRestService.createUser(createUserModel).path("data.name").toString());
+        //System.out.println(GoRestService.createUser(createUserModel).path("data.message").toString());
+
 
     }
 
@@ -61,9 +62,6 @@ public class CreateUserTests {
     @Order(2)
     public void verify_Created_UserInfo(){
 
-        try{
-
-            assert(false);
 
             GoRestService.getCreatedUser(userId)
                     .then()
@@ -76,9 +74,7 @@ public class CreateUserTests {
                     .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("goRestSchema.json"))
                     .time(both(greaterThan(100L)).and(lessThanOrEqualTo(1000L)));;
 
-        }catch(AssertionError e){
 
-        }
 
     }
 
@@ -88,9 +84,6 @@ public class CreateUserTests {
     @Order(3)
     public void Update_UserInfo_With_Put(){
 
-        try{
-
-            assert(false);
 
             GoRestService.updateUserWithPut(updateUserWithPut, userId)
                     .then()
@@ -104,9 +97,6 @@ public class CreateUserTests {
                     .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("goRestSchema.json"))
                     .time(both(greaterThan(100L)).and(lessThanOrEqualTo(1000L)));;
 
-        }catch(AssertionError e){
-
-        }
 
 
     }
@@ -117,9 +107,6 @@ public class CreateUserTests {
     @Order(4)
     public void Update_UserInfo_With_Patch(){
 
-        try{
-
-            assert(false);
 
             GoRestService.updateUserWithPatch(updateUserWithPatch, userId)
                     .then()
@@ -131,9 +118,6 @@ public class CreateUserTests {
                     .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("goRestSchema.json"))
                     .time(both(greaterThan(100L)).and(lessThanOrEqualTo(1000L)));;
 
-        }catch(AssertionError e){
-
-        }
 
     }
 
@@ -143,18 +127,13 @@ public class CreateUserTests {
     @Order(5)
     public void delete_User(){
 
-        try{
 
-            assert(false);
 
             GoRestService.deleteUser(userId)
                     .then()
                     .statusCode(SC_NO_CONTENT)
                     .time(both(greaterThan(100L)).and(lessThanOrEqualTo(1000L)));;
 
-        }catch(AssertionError e){
-
-        }
 
 
     }
@@ -165,9 +144,6 @@ public class CreateUserTests {
     @Order(6)
     public void verify_Deleted_UserInfo(){
 
-        try{
-
-            assert(false);
 
             GoRestService.getCreatedUser(userId)
                     .then()
@@ -175,9 +151,6 @@ public class CreateUserTests {
                     .body("data.message", equalTo("Resource not found"))
                     .time(both(greaterThan(100L)).and(lessThanOrEqualTo(1000L)));;
 
-        }catch(AssertionError e){
-
-        }
 
 
     }
